@@ -3,36 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Socket Cypher & Decypher</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-   <img id="img1" alt="1">
-   <img id="img2" alt="2">
+<body class="p-2 border border-green-400 bg-black height-screen">
+    <div class="container">
+       <form action="/upload" method="POST" enctype="multipart/form-data">
+           <input class="cursor-pointer opacity-9 bg-black" type="file" name="image">
+           <input class="w-24 h-18 bg-black border-green-400 border text-green-400" type="submit" value="send">
+       </form>
+       <div class="result">
+           <img id="img1" alt="1">
+           <img id="img2" alt="2">
+       </div>
+    </div>
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-        const socket = io()
-
-        function b64(e){
-            let t="";
-            let n = new Uint8Array(e);
-            let r = n.byteLength;
-            for(let i=0; i<r; i++) {
-                t+=String.fromCharCode(n[i])
-            }
-            return window.btoa(t)
-        }
-
-        const img1 = document.getElementById("img1")
-        const img2 = document.getElementById("img2")
-        
-        socket.on("clientImgConversion", data => {
-            img1.src = "data:image/png;base64,"+b64(data.buffer)
-            console.log("client data: ", data)
-        })
-
-        socket.on("serverImgConversion", data => {
-            img2.src = data
-            console.log("server data: ", data)
-        })
-    </script>
+    <script src="client.js"></script>
 </body>
 </html>
